@@ -28,4 +28,24 @@ describe('BucketManager', function() {
       expect(buster.identifier).toEqual('key')
     })
   })
+
+  describe('hasExpired', function() {
+    it("returns an empty array without buckets", function() {
+      expect(this.bucketManager.getExpired()).toEqual([])
+    })
+
+    it("returns an empty array without expired buckets", function() {
+      this.bucketManager.add('key')
+      expect(this.bucketManager.getExpired()).toEqual([])
+    })
+
+    it("returns expired buckets", function() {
+      var bucket1 = this.bucketManager.add('key')
+        , bucket2 = this.bucketManager.add('foo')
+
+      bucket1.updatedAt = new Date(bucket1.updatedAt - bucket1.ttl * 2)
+
+      expect(this.bucketManager.getExpired()).toEqual([bucket1])
+    })
+  })
 })

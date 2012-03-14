@@ -20,3 +20,9 @@ BucketManager.prototype.get = function(key) {
     return bucket.identifier == key
   })[0]
 }
+
+BucketManager.prototype.getExpired = function() {
+  return this.buckets.filter(function(bucket) {
+    return bucket.hasExpired()
+  })
+}
