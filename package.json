@@ -1,0 +1,18 @@
+{
+  "author": "Sascha Depold <sascha@depold.com> (http://depold.com)",
+  "name": "kollect",
+  "version": "0.0.0",
+  "repository": {
+    "url": ""
+  },
+  "engines": {
+    "node": "~0.6.2"
+  },
+  "dependencies": {
+    "buster": ">=0.4.6"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "node_modules/.bin/buster test"
+  }
+}
