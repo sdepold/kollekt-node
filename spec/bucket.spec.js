@@ -1,21 +1,21 @@
 if(typeof require === 'function') {
-  var buster = require("buster")
+  const buster = require("buster")
+      , Bucket = require("../src/bucket")
 }
 
-// buster.spec.expose()
+buster.spec.expose()
 
-buster.testCase('asd', {
-  'asd': function() {
-    assert(false)
-  }
+describe('Bucket', function() {
+  describe('init', function() {
+    it("stores the passed identifier", function() {
+      var bucket = new Bucket('foo')
+      expect(bucket.identifier).toEqual('foo')
+    })
+
+    it("sets date of last update to current timestamp", function() {
+      var bucket = new Bucket()
+      expect(bucket.updatedAt / 1000).toEqual(new Date() / 1000)
+    })
+  })
+
 })
-
-// describe('Bucket', function() {
-//   describe('init', function() {
-//     it("stores the passed identifier", function() {
-//       //var bucker = new Bucket('foo')
-//       //expect(bucket.identifier).toEqual('foo')
-//       assert(false)
-//     })
-//   })
-// })
