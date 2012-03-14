@@ -29,4 +29,24 @@ describe('Bucket', function() {
     })
   })
 
+  describe('hasExpired', function() {
+    before(function() {
+      this.bucket = new Bucket('foo')
+    })
+
+    it("is false for freshly created buckets", function() {
+      expect(this.bucket.hasExpired()).toBeFalse()
+    })
+
+    it("is false for just tracked buckets", function() {
+      this.bucket.track('asd')
+      expect(this.bucket.hasExpired()).toBeFalse()
+    })
+
+    it("is true for tracks that are older than ttl", function() {
+      this.bucket.updatedAt = new Date(this.bucket.updatedAt - this.bucket.ttl * 2)
+      expect(this.bucket.hasExpired()).toBeTrue()
+    })
+  })
+
 })
