@@ -5,9 +5,7 @@ var BucketManager = module.exports = function() {
 }
 
 BucketManager.prototype.add = function(key) {
-  var result = this.buckets.filter(function(bucket) {
-    return bucket.identifier == key
-  })[0]
+  var result = this.get(key)
 
   if(!result) {
     result = new Bucket(key)
@@ -15,4 +13,10 @@ BucketManager.prototype.add = function(key) {
   }
 
   return result
+}
+
+BucketManager.prototype.get = function(key) {
+  return this.buckets.filter(function(bucket) {
+    return bucket.identifier == key
+  })[0]
 }
