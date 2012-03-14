@@ -14,7 +14,18 @@ describe('Bucket', function() {
 
     it("sets date of last update to current timestamp", function() {
       var bucket = new Bucket()
-      expect(bucket.updatedAt / 1000).toEqual(new Date() / 1000)
+      expect(parseInt(bucket.updatedAt / 1000)).toEqual(parseInt(new Date() / 1000))
+    })
+  })
+
+  describe("track", function() {
+    before(function() {
+      this.bucket = new Bucket('foo')
+    })
+
+    it("stores the passed value", function() {
+      this.bucket.track('a value')
+      expect(this.bucket.values.length).toEqual(1)
     })
   })
 
