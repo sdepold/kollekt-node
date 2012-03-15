@@ -1,29 +1,29 @@
 const BucketManager = require("./bucket-manager")
+    , _             = require("underscore")
 
-var Server = module.exports = function(port) {
-  this.port  = port || 2323
-  this.dgram = require("dgram").createSocket("udp4")
+var Server = module.exports = function(options) {
+  this.options = _.extend({
+    port: 2323,
+    serverLib: require('dgram')
+  }, options || {})
+  this.server = this.options.serverLib.createSocket("udp4")
   this.bucketManager = new BucketManager()
 }
 
 Server.prototype.start = function() {
   var self = this
 
-  this.dgram.on("message", function(msg, rinfo) {
+  this.server.on("message", function(msg, rinfo) {
     console.log("server got: " + msg + " from " + rinfo.address + ":" + rinfo.port)
     self.handleRequest(msg.toString())
   })
 
-  this.dgram.on("listening", function() {
+  this.server.on("listening", function() {
     var address = this.address()
     console.log("server listening " + address.address + ":" + address.port)
   })
 
-  this.dgram.bind(this.port);
-}
-
-Server.prototype.stop = function() {
-  this.dgram.close()
+  this.server.bind(this.options.port);
 }
 
 Server.prototype.handleRequest = function(message) {
