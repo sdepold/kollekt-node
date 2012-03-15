@@ -7,13 +7,22 @@ buster.spec.expose()
 
 describe('Bucket', function() {
   describe('init', function() {
+    before(function() {
+      this.clock  = this.useFakeTimers()
+    })
+
+    after(function() {
+      this.clock.restore()
+    })
+
     it("stores the passed identifier", function() {
       var bucket = new Bucket('foo')
       expect(bucket.identifier).toEqual('foo')
     })
 
     it("sets date of last update to current timestamp", function() {
-      expect(new Bucket().updatedAt).toEqual(new Date())
+      var bucket = new Bucket()
+      expect(bucket.updatedAt).toEqual(new Date())
     })
   })
 
