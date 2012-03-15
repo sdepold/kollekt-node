@@ -1,22 +1,13 @@
 const _    = require("underscore")
     , path = require("path")
+    , fs   = require("fs")
 
-var BucketLogger = module.exports = function(options) {
-  this.options = _.extend({
-    rotationTime: 1000 * 60 * 60
-  }, options || {})
-}
+var BucketLogger = module.exports = function() {}
 
 BucketLogger.prototype.log = function(bucket) {
-  if(!this.fileExists()) {
-    this.createFile()
-  }
-}
-
-BucketLogger.prototype.fileExists = function() {
-
-
-  console.log(file)
+  var stream = fs.createWriteStream(this.getFilePath(), { flags: 'a' })
+  stream.write(bucket.toString() + "\n")
+  stream.end()
 }
 
 BucketLogger.prototype.getFilePath = function() {
@@ -26,8 +17,4 @@ BucketLogger.prototype.getFilePath = function() {
   )
 
   return path.resolve(__dirname, '..', 'logs') + '/' + (+dateForCurrentHour) + '.log'
-}
-
-BucketLogger.prototype.createFile = function() {
-
 }

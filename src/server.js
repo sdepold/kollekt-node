@@ -44,10 +44,5 @@ Server.prototype.requestBucket = function(message) {
 }
 
 Server.prototype.checkForExpiredBuckets = function() {
-  var expired = this.bucketManager.getExpired()
-
-  if(expired.length > 0) {
-    var expiredBucketNames = expired.map(function(bucket) { return bucket.identifier }).join(', ')
-    console.log('The following buckets are expired: ' + expiredBucketNames)
-  }
+  this.bucketManager.logExpired()
 }

@@ -1,7 +1,9 @@
 const Bucket = require("./bucket")
+    , Logger = require("./bucket-logger")
 
 var BucketManager = module.exports = function() {
   this.buckets = []
+  this.logger  = new Logger()
 }
 
 BucketManager.prototype.add = function(key) {
@@ -21,8 +23,24 @@ BucketManager.prototype.get = function(key) {
   })[0]
 }
 
+BucketManager.prototype.remove = function(key) {
+  this.buckets = this.buckets.filter(function(bucket) {
+    return bucket.identifier != key
+  })
+}
+
 BucketManager.prototype.getExpired = function() {
   return this.buckets.filter(function(bucket) {
     return bucket.hasExpired()
+  })
+}
+
+BucketManager.prototype.logExpired = function() {
+  var expiredBuckets = this.getExpired()
+    , self           = this
+
+  expiredBuckets.forEach(function(bucket) {
+    self.logger.log(bucket)
+    self.remove(bucket.identifier)
   })
 }
