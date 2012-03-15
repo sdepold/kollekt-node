@@ -55,7 +55,6 @@ describe('Bucket', function() {
     before(function() {
       this.clock  = this.useFakeTimers()
       this.bucket = new Bucket('foo')
-      this.stub(this.bucket, 'isOverTTL').returns(false)
     })
 
     after(function() {
@@ -67,16 +66,32 @@ describe('Bucket', function() {
     })
 
     it("is false for just tracked buckets", function() {
+      this.stub(this.bucket, 'isOverTTL').returns(false)
       this.clock.tick(this.bucket.ttl - 1)
       this.bucket.track('asd')
-      this.clock.tick(100)
+      this.clock.tick(1)
       expect(this.bucket.hasExpired()).toBeFalse()
     })
 
     it("is true for tracks that are older than ttl", function() {
-      this.clock.tick(this.bucket.ttl + 1)
+      this.stub(this.bucket, 'isOverTTL').returns(false)
+      this.clock.tick(this.bucket.ttl)
       expect(this.bucket.hasExpired()).toBeTrue()
     })
-  })
 
+    it("is true when bucket was idle", function() {
+      this.clock.tick(this.bucket.idleTTL)
+      expect(this.bucket.hasExpired()).toBeTrue()
+    })
+
+    it("is true when bucket has too many values", function() {
+      this.bucket.maxValues = 0
+      expect(this.bucket.hasExpired()).toBeTrue()
+    })
+
+    it("is false when bucket has less then max values", function() {
+      this.bucket.maxValues = 1
+      expect(this.bucket.hasExpired()).toBeFalse()
+    })
+  })
 })
