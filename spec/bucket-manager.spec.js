@@ -29,7 +29,7 @@ describe('BucketManager', function() {
     })
   })
 
-  describe('hasExpired', function() {
+  describe('getExpired', function() {
     it("returns an empty array without buckets", function() {
       expect(this.bucketManager.getExpired()).toEqual([])
     })

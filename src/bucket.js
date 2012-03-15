@@ -7,6 +7,7 @@ var Bucket = module.exports = function(identifier) {
 
 Bucket.prototype.track = function(value) {
   this.values.push(value)
+  this.updatedAt = new Date()
 }
 
 Bucket.prototype.hasExpired = function() {
