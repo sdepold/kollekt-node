@@ -40,7 +40,7 @@ Server.prototype.requestBucket = function(message) {
   bucket.track(bucketValue)
 
   console.log('Just added ' + bucketValue + ' to bucket ' + bucketKey)
-  console.log('Values in bucket ' + bucketValue + ' is now ' + bucket.values.join(', '))
+  console.log('Values in bucket ' + bucketKey + ' is now ' + bucket.values.join(', '))
 }
 
 Server.prototype.checkForExpiredBuckets = function() {

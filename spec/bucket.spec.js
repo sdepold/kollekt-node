@@ -55,6 +55,7 @@ describe('Bucket', function() {
     before(function() {
       this.clock  = this.useFakeTimers()
       this.bucket = new Bucket('foo')
+      this.stub(this.bucket, 'isOverTTL').returns(false)
     })
 
     after(function() {
