@@ -11,6 +11,7 @@ describe('Server', function() {
       this.serverLib = {
         createSocket: function() {}
       }
+      this.serverLibMock = this.mock(this.serverLib)
     })
 
     it('stores the passed port', function() {
@@ -19,7 +20,6 @@ describe('Server', function() {
     })
 
     it('uses a default port if it is not passed', function() {
-      var serverLibMock = this.mock(this.serverLib)
       var server = new Server({ serverLib: this.serverLib })
       expect(server.options.port).toEqual(2323)
     })
