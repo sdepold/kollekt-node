@@ -14,7 +14,6 @@ Server.prototype.start = function() {
   var self = this
 
   this.socket.on("message", function(msg, rinfo) {
-    console.log("server got: " + msg + " from " + rinfo.address + ":" + rinfo.port)
     self.handleRequest(msg.toString())
   })
 
@@ -38,9 +37,6 @@ Server.prototype.requestBucket = function(message) {
     , bucket       = this.bucketManager.add(bucketKey)
 
   bucket.track(bucketValue)
-
-  console.log('Just added ' + bucketValue + ' to bucket ' + bucketKey)
-  console.log('Values in bucket ' + bucketKey + ' is now ' + bucket.values.join(', '))
 }
 
 Server.prototype.checkForExpiredBuckets = function() {
