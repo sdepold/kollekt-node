@@ -11,9 +11,17 @@ var Server = module.exports = function(options) {
 }
 
 Server.prototype.start = function() {
-  var self = this
+  var self  = this
+    , bytes = 0
 
   this.socket.on("message", function(msg, rinfo) {
+    if(process.env.DEBUG) {
+      bytes += msg.length
+
+      if((+new Date % 1000) == 0)
+        console.log("Mb/s:", (bytes * 8) / 1024 / 1024)
+    }
+
     self.handleRequest(msg.toString())
   })
 
