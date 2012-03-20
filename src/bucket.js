@@ -5,8 +5,8 @@ var Bucket = module.exports = function(identifier) {
   this.updatedAt  = new Date()
   this.createdAt  = this.updatedAt
   this.values     = []
-  this.ttl        = 1000 * 60 * 30 // 30 minutes
-  this.idleTTL    = 1000 * 30      // 30 seconds
+  this.ttl        = 1800000 // 1000 * 60 * 30 = 30 minutes
+  this.idleTTL    = 30000   // 1000 * 30 = 30 seconds
   this.maxValues  = 100
 }
 
